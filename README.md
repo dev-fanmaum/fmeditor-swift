@@ -1,6 +1,6 @@
 # FMEditorSwift
 
-[![CI Status](https://img.shields.io/travis/appsstudioio/FMEditorSwift.svg?style=flat)](https://travis-ci.org/appsstudioio/FMEditorSwift)
+[![CI Status](https://img.shields.io/travis/dev-fanmaum/FMEditorSwift.svg?style=flat)](https://travis-ci.org/dev-fanmaum/FMEditorSwift)
 [![Version](https://img.shields.io/cocoapods/v/FMEditorSwift.svg?style=flat)](https://cocoapods.org/pods/FMEditorSwift)
 [![License: BSD 3](https://img.shields.io/badge/license-BSD3-blue.svg)](./LICENSE.md)
 [![Platform](https://img.shields.io/cocoapods/p/FMEditorSwift.svg?style=flat)](https://cocoapods.org/pods/FMEditorSwift)
