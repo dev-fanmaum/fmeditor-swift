@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'FMEditorSwift_Example' do
+  pod 'FMEditorSwift', :path => '../'
+
+  target 'FMEditorSwift_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
