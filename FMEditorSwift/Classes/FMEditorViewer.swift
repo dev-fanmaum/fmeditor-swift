@@ -21,7 +21,7 @@ import WebKit
     // MARK: Public Properties
     
     /// Input accessory view to display over they keyboard.
-    var delegate: FMEditorViewerDelegate?
+    open weak var delegate: FMEditorViewerDelegate?
     /// Defaults to nil
     open override var inputAccessoryView: UIView? {
         get { return webView.cjw_inputAccessoryView }
