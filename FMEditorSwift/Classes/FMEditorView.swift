@@ -157,8 +157,8 @@ public class FMEditorWebView: WKWebView {
         webView.scrollView.showsVerticalScrollIndicator = true
         
         addSubview(webView)
-
-        if let filePath = Bundle(identifier:"org.cocoapods.FMEditorSwift")?.path(forResource: "rich_editor", ofType: "html", inDirectory: "FMEditorSwift.bundle") {
+        
+        if let filePath = Bundle(for: FMEditorView.self).path(forResource: "rich_editor", ofType: "html", inDirectory: "FMEditorSwift.bundle"){
             let url = URL(fileURLWithPath: filePath, isDirectory: false)
             webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         }
