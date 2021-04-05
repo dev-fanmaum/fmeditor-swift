@@ -148,7 +148,7 @@ import WebKit
         self.addSubview(webView)
         
         DispatchQueue.main.async {
-            if let filePath = Bundle(identifier:"org.cocoapods.FMEditorSwift")?.path(forResource: "viewer", ofType: "html", inDirectory: "FMEditorSwift.bundle") {
+            if let filePath = Bundle(for: FMEditorViewer.self).path(forResource: "viewer", ofType: "html", inDirectory: "FMEditorSwift.bundle"){
                 let url = URL(fileURLWithPath: filePath, isDirectory: false)
                 self.webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
             }
