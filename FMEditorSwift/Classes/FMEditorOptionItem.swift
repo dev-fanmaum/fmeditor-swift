@@ -118,13 +118,9 @@ public enum FMEditorDefaultOption: FMEditorOption {
         case .link: name = "insert_link"
         case .table: name = "insert_table"
         }
-
-        let podBundle = Bundle(identifier:"org.cocoapods.FMEditorSwift")
-        if let bundleURL = podBundle?.url(forResource: "FMEditorSwift", withExtension: "bundle")
-        {
-            let imageBundel = Bundle(url: bundleURL)
-            let image = UIImage(named: name, in: imageBundel, compatibleWith: nil)
-            return image
+        
+        if let filePath = Bundle(for: FMEditorToolbar.self).path(forResource: name, ofType: "png", inDirectory: "FMEditorSwift.bundle"){
+            return UIImage(contentsOfFile: filePath)
         }
         return nil
     }
