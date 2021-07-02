@@ -54,8 +54,20 @@ public class FMEditorWebView: WKWebView {
     /// Input accessory view to display over they keyboard.
     /// Defaults to nil
     open override var inputAccessoryView: UIView? {
-        get { return webView.cjw_inputAccessoryView }
-        set { webView.cjw_inputAccessoryView = newValue }
+        get {
+            if #available(iOS 13.0, *) {
+                return webView.accessoryView
+            } else {
+                return webView.cjw_inputAccessoryView
+            }
+        }
+        set {
+            if #available(iOS 13.0, *) {
+                return webView.accessoryView = newValue
+            } else {
+                return webView.cjw_inputAccessoryView = newValue
+            }
+        }
     }
     
     /// The internal WKWebView that is used to display the text.
