@@ -547,8 +547,8 @@ public class FMEditorWebView: WKWebView {
         let scrollView = self.webView.scrollView
         
         getClientHeight(handler: { clientHeight in
-            let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
-            scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
+            let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.bounds.height
+            scrollView.contentSize = CGSize(width: scrollView.bounds.width, height: contentHeight)
             
             // XXX: Maybe find a better way to get the cursor height
             self.getLineHeight(handler: { lh in
@@ -558,7 +558,7 @@ public class FMEditorWebView: WKWebView {
                     let visiblePosition = CGFloat(r)
                     var offset: CGPoint?
                     
-                    if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+                    if visiblePosition + cursorHeight > scrollView.bounds.height {
                         // Visible caret position goes further than our bounds
                         offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
                     } else if visiblePosition < 0 {
@@ -585,7 +585,6 @@ public class FMEditorWebView: WKWebView {
                 isEditorLoaded = true
                 setHTML(html)
                 contentHTML = html
-                html = contentHTML
                 contentEditable = editingEnabledVar
                 placeholder = placeholderText
                 lineHeight = DefaultInnerLineHeight
