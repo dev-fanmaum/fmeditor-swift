@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '12.1'
 
 target 'FMEditorSwift_Example' do
   pod 'FMEditorSwift', :path => '../'
