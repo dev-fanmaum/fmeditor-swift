@@ -47,7 +47,7 @@ public class FMEditorWebView: WKWebView {
 }
 
 /// FMEditorView is a UIView that displays richly styled text, and allows it to be edited in a WYSIWYG fashion.
-@objcMembers open class FMEditorView: UIView, UIScrollViewDelegate, WKNavigationDelegate, UIGestureRecognizerDelegate {
+@objcMembers open class FMEditorView: UIView, UIScrollViewDelegate, WKNavigationDelegate, UIGestureRecognizerDelegate, WKUIDelegate {
     /// The delegate that will receive callbacks when certain actions are completed.
     open weak var delegate: FMEditorDelegate?
     
@@ -141,7 +141,9 @@ public class FMEditorWebView: WKWebView {
     // MARK: Initialization
     
     public override init(frame: CGRect) {
-        webView = FMEditorWebView()
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsInlineMediaPlayback = true
+        webView = FMEditorWebView(frame: .zero, configuration: configuration)
         super.init(frame: frame)
         setup()
     }
@@ -156,6 +158,7 @@ public class FMEditorWebView: WKWebView {
         // configure webview
         webView.frame = bounds
         webView.navigationDelegate = self
+        webView.uiDelegate = self
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.configuration.dataDetectorTypes = WKDataDetectorTypes()
         webView.isOpaque = false
@@ -367,15 +370,31 @@ public class FMEditorWebView: WKWebView {
         runJS("RE.insertImage('\(url.escaped)', '\(alt.escaped)')")
     }
     
-    public func insertVideo(video: String, isBase64: Bool=false) {
+    public func insertVideo(video: String) {
         // Remember, both poster and src can be base64 encoded
         runJS("RE.prepareInsert()")
         var theJS: String
         let uuid = UUID().uuidString
-        theJS = "<div><video \(isBase64 ? "id='"+uuid+"'":"") class='video-js' controls preload='auto' data-setup='{}'><source src='\(video)\(isBase64 ? "":"#t=0.01")'></source></video></div>"
+        theJS = """
+            <div>
+                <video class="video-js" controls preload="auto" data-setup="{}">
+                    <source src="\(video)"></source>
+                </video>
+            </div>
+        """
         runJS("RE.insertHTML('\(theJS.escaped)')")
     }
-    
+
+    public func insertYoutubeLink(src: String) {
+        runJS("RE.prepareInsert()")
+        // width="1920" height="1080" 
+        let htmlTag =
+        """
+        <iframe src="\(src)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; allowfullscreen"></iframe>
+        """
+        runJS("RE.insertHTML('\(htmlTag)')")
+    }
+
     public func insertLink(href: String, text: String, title: String = "") {
         runJS("RE.prepareInsert()")
         runJS("RE.insertLink('\(href.escaped)', '\(text.escaped)', '\(title.escaped)')")
@@ -458,7 +477,9 @@ public class FMEditorWebView: WKWebView {
     
     // MARK: WKWebViewDelegate
     
-    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {}
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("\(#function)")
+    }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         // Handle pre-defined editor actions
@@ -484,8 +505,11 @@ public class FMEditorWebView: WKWebView {
         // User is tapping on a link, so we should react accordingly
         if navigationAction.navigationType == .linkActivated {
             if let url = navigationAction.request.url {
-                if delegate?.fmEditor?(self, shouldInteractWith: url) ?? false {
-                    return decisionHandler(WKNavigationActionPolicy.allow);
+                let allow = delegate?.fmEditor?(self, shouldInteractWith: url) ?? false
+                if allow {
+                    return decisionHandler(WKNavigationActionPolicy.allow)
+                } else {
+                    return decisionHandler(WKNavigationActionPolicy.cancel)
                 }
             }
         }

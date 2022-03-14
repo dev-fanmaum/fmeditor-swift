@@ -89,6 +89,14 @@ video {
     height: auto !important;
 }
 
+iframe {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: -webkit-calc(100vw/1.777);
+    height: calc(100vw/1.777);
+}
+
 table {overflow-x: scroll;}
 th, td {max-width: 200px; min-width:50px;}
 table, td, th{border-collapse:collapse; border:1px solid #777;}
