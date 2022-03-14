@@ -126,7 +126,7 @@ RE.setPlaceholderText = function(text) {
 };
 
 RE.updatePlaceholder = function() {
-    if (RE.editor.innerHTML.indexOf('img') !== -1 || (RE.editor.textContent.length > 0 && RE.editor.innerHTML.length > 0)) {
+    if (RE.editor.innerHTML.indexOf('img') !== -1 || RE.editor.innerHTML.indexOf('iframe') !== -1 || (RE.editor.textContent.length > 0 && RE.editor.innerHTML.length > 0)) {
         RE.editor.classList.remove("placeholder");
     } else {
         RE.editor.classList.add("placeholder");
@@ -505,4 +505,8 @@ RE.getRelativeCaretYPosition = function() {
 
 window.onload = function() {
     RE.callback("ready");
+
+//    var deviceWidth = window.innerWidth - 20
+//    document.querySelector("iframe").style.width = deviceWidth + "px"
+//    document.querySelector("iframe").style.height = (deviceWidth * 1.7777) + "px"
 };

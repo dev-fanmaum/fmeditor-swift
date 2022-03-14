@@ -92,13 +92,17 @@ import WebKit
     // MARK: Initialization
     
     public override init(frame: CGRect) {
-        webView = WKWebView()
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: .zero, configuration: configuration)
         super.init(frame: frame)
         setup()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        webView = WKWebView()
+        let configuration = WKWebViewConfiguration()
+        configuration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: .zero, configuration: configuration)
         super.init(coder: aDecoder)
         setup()
         
@@ -301,7 +305,7 @@ import WebKit
                 let application = UIApplication.shared
                 if application.canOpenURL(URL(string: url.absoluteString)!) {
                     application.open(URL(string: url.absoluteString)!, options: [:], completionHandler: nil)
-                    return decisionHandler(WKNavigationActionPolicy.allow);
+                    return decisionHandler(WKNavigationActionPolicy.cancel);
                 }
             }
         }
