@@ -93,3 +93,8 @@ table {overflow-x: scroll;}
 th, td {max-width: 200px; min-width:50px;}
 table, td, th{border-collapse:collapse; border:1px solid #777;}
 td{padding:5px 10px; height:35px;}
+
+a { color: #0080ff; display: inline;}
+a:link { color: #0080ff; text-decoration: none; border: #0080ff solid; border-width: 0 0 1px 0; }
+a:visited { color: #0080ff; text-decoration: none; border: #0080ff solid; border-width: 0 0 1px 0; }
+
