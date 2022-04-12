@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FMEditorSwift'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'HTML Editor for iOS written in Swift'
   s.homepage         = 'https://github.com/dev-fanmaum/fmeditor-swift'
   s.license          = { :type => 'BSD 3-clause', :file => 'LICENSE' }
